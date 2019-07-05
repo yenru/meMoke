@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>meMoke</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="library/jquery.min.js"></script>
+<script type="text/javascript" src="library/jquery-touch-events.min.js"></script>
+<link rel="stylesheet" href="library/kendo/kendo.common-material.min.css" />
+<link rel="stylesheet" href="library/kendo/kendo.materialblack.min.css" />
+<script type="text/javascript" src="library/kendo/kendo.all.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="library/style.css">
+<script type="text/javascript" src="library/appMethod.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</head>
+<body>
+
+<div id="viewType">
+	<button id="addMemo" class="left"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/FFFFFF/add.svg);"></i></button>
+	<p></p>
+	<button id="openMenu" class="right"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/FFFFFF/list.svg);"></i></button>
+</div>
+<hr />
+<div id="memoList">
+	<ul></ul>
+</div>
+<div id="touchArea"></div>
+
+<div class="menuList" id="menu_function">
+	<ul class="menuOption">
+		<li onclick="openViewClass()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/visibility.svg);"></i>清單顯示種類</li>
+		<!--<li><i class="material-icons" style="mask-image: url(library/GoogleMaterialIcons/.svg);-webkit-mask-image: url(library/GoogleMaterialIcons/.svg);">search</i>搜尋記事</li>-->
+		<li viewClass="date" onclick="cloneMultipleFrom()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/arrow_downward.svg);"></i>複製於…</li>
+		<li viewClass="date" onclick="cloneMultipleTo()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/arrow_upward.svg);"></i>複製至…</li>
+		<!--<li viewClass="date" onclick="moveMultipleTo()"><i class="material-icons" style="mask-image: url(library/GoogleMaterialIcons/.svg);-webkit-mask-image: url(library/GoogleMaterialIcons/.svg);">arrow_upward</i>移動至…</li>-->
+		<li class="viewHide" onclick="shSwitch()"><i class="material-icons hideFinish" style="background-image: url(library/GoogleMaterialIcons/000000/indeterminate_check_box.svg);"></i>隱藏已完成事項</li>
+		<!--<li><i class="material-icons" style="">settings</i>系統設定</li>-->
+		<li class="menu_bottom cancel menu_right" onclick="menuFuncitonClose()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>關閉選單</li>
+	</ul>
+</div>
+<div class="menuList" id="mFunc_viewClass"><!--清單顯示種類-->
+	<ul class="menuOption">
+		<li class="tip">請選擇清單顯示種類</li>
+		<li viewClass="date" onclick="viewClassSelected('date')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/event.svg);"></i>日期<p></p></li>
+		<!--<li viewClass="group" onclick="viewClassSelected('group')"><i class="material-icons" style="mask-image: url(library/GoogleMaterialIcons/.svg);-webkit-mask-image: url(library/GoogleMaterialIcons/.svg);">group_work</i>群組<p></p></li>-->
+		<li viewClass="color" onclick="viewClassSelected('color')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_color_text.svg);"></i>文字顏色<p></p></li>
+		<li viewClass="bold" onclick="viewClassSelected('bold')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_bold.svg);"></i>文字粗細</li>
+		<li viewClass="background" onclick="viewClassSelected('background')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_color_fill.svg);"></i>背景顏色<p></p></li>
+		<li viewClass="label" onclick="viewClassSelected('label')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/bookmark.svg);"></i>圖示<p></p></li>
+		<li viewClass="tag" onclick="viewClassSelected('tag')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/label.svg);"></i>顏色標籤<p></p></li>
+		<li class="menu_bottom cancel menu_right" onclick="$('#mFunc_viewClass').hide();appMethod.logCloseMenu('#mFunc_viewClass');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</li>
+	</ul>
+</div>
+<div class="menuList" id="mFunc_viewFilter"><!--顯示清單內容-->
+	<ul class="menuOption">
+		<li class="tip"></li>
+		<li viewClass="date"><div id="calendar"></div></li>
+		<li viewClass="group"></li>
+		<li viewClass="color"></li>
+		<li viewClass="bold"><button class="menu_left" style="font-weight:normal">細字體</button><button class="menu_right">粗字體</button></li>
+		<li viewClass="background"></li>
+		<li viewClass="label"></li>
+		<li viewClass="tag"></li>
+		<li class="menu_bottom cancel menu_right" onclick="$('#mFunc_viewFilter').hide();appMethod.logCloseMenu('#mFunc_viewFilter');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</li>
+	</ul>
+</div>
+<div class="menuList" id="mFunc_search"><!--搜尋記事-->
+	<ul class="menuOption">
+		<li class="tip">請輸入記事關鍵字</li>
+		<li><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/search.svg);"></i><input type="text" /></li>
+		<li class="menu_bottom"><button class="menu_left cancel"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</button><button class="menu_right"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/find_in_page.svg);"></i>搜尋</button></li>
+	</ul>
+</div>
+<div class="menuList" id="mFunc_setting"><!--系統設定-->
+	<ul class="menuOption">
+		<li class="tip">系統設定</li>
+		<!-- <li><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/.svg);"></i></li> -->
+		<li class="menu_bottom cancel menu_right"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</li>
+	</ul>
+</div>
+<div class="menuList" id="menu_record">
+	<ul class="menuOption">
+		<li onclick="moveOneTo()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/arrow_forward.svg);"></i>移動至…</li>
+		<li onclick="cloneOneTo()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/arrow_upward.svg);"></i>複製至…</li>
+		<li onclick="memoEditOpen()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/edit.svg);"></i>修改記事</li>
+		<li onclick="memoDelete()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/delete_sweep.svg);"></i>刪除記事</li>
+		<!--<li><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/.svg);">filter_list</i>列出相關記事</li>-->
+		<li class="menu_bottom" onclick="$('#menu_record').hide();appMethod.logCloseMenu('#menu_record');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>關閉選單</li>
+	</ul>
+</div>
+<div class="menuList" id="mFunc_clone"><!--複製-->
+	<ul class="menuOption">
+		<li class="tip"></li>
+		<li class="includeFinished"><input type="checkbox" name="include" /><span>包括已完成事項</span></li>
+		<li class="cloneDate cloneFrom"><i class="material-icons calendar" style="background-image: url(library/GoogleMaterialIcons/000000/date_range.svg);"></i>開始：<p id="cloneFrom"></p><input id="cloneFromPicker" class="datePicker" /></li>
+		<li class="cloneDate cloneTo"><i class="material-icons calendar" style="background-image: url(library/GoogleMaterialIcons/000000/date_range.svg);"></i>結束：<p id="cloneTo"></p><input id="cloneToPicker" class="datePicker" /></li>
+		<li class="menu_bottom"><button class="menu_left cancel" onclick="cloneFormClose()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</button><button class="menu_right" onclick="cloneConfirm()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/check_circle.svg);"></i>確定</button></li>
+	</ul>
+</div>
+<div class="menuList" id="memoEdit"><!--開新記事-->
+	<ul class="menuOption">
+		<li class="tip"></li>
+		<li class="memoInput"><input type="text" placeholder="請在此輸入您的記事內容"/></li>
+		<li type="date"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/event.svg);"></i>日期<p></p></li>
+		<!--<li type="group"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/.svg);">group_work</i>群組<p></p></li>-->
+		<li type="color" onclick="appMethod.openColorPicker('#memoEdit li[type=color] p');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_color_text.svg);"></i>文字顏色<p></p></li>
+		<li type="bold" onclick="appMethod.changeFontWeight('#memoEdit li[type=bold] p')"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_bold.svg);"></i>文字粗細<p style="font-weight: 400">細</p></li>
+		<li type="background" onclick="appMethod.openColorPicker('#memoEdit li[type=background] p');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/format_color_fill.svg);"></i>背景顏色<p></p></li>
+		<li type="label" onclick="appMethod.openIconPicker('#memoEdit li[type=label] p');"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/bookmark.svg);"></i>圖示<p></p></li>
+		<li type="tag" onclick="appMethod.openColorPicker('#memoEdit li[type=tag] p', 5);"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/label.svg);"></i>顏色標籤<p></p></li>
+		<li class="menu_bottom">
+			<button class="menu_left cancel" onclick="memoEditCancel()"><i class="material-icons" style="background-image: url(library/GoogleMaterialIcons/000000/cancel.svg);"></i>取消</button>
+		</li>
+	</ul>
+</div>
+
+</body>
+</html>

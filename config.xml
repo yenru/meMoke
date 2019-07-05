@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="10" id="tw.moke.memo" version="0.1.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>meMoke</name>
+    <description>
+    </description>
+    <author email="davina@moke.tw" href="https://www.moke.tw/">Davina</author>
+    <preference name="phonegap-version" value="6.5.0" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="portrait" />
+    <icon src="res/meMoke_icon512.png" />
+    <content src="index.html" />
+    <access origin="*" />
+    <platform name="ios">
+        <preference name="EnableViewportScale" value="true" />
+        <preference name="iosPersistentFileLocation" value="Compatibility" />
+    </platform>
+    <platform name="android">
+        <preference name="android-targetSdkVersion" value="21" />
+        <preference name="android-minSdkVersion" value="17" />
+        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+
+        <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/><!--480x800px-->
+        <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/><!--720px1280px-->
+        <splash src="res/screen/android/splash-port-xxhdpi.png" density="port-xxhdpi"/><!--960px1600px-->
+        <splash src="res/screen/android/splash-port-xxxhdpi.png" density="port-xxxhdpi"/><!--1280px1920px-->
+        <preference name="SplashMaintainAspectRatio" value="false" /><!--使用cover方式呈現launch image-->
+        <preference name="SplashShowOnlyFirstTime" value="false" /><!--僅第一次啟動app時顯示launch image-->
+    </platform>
+    <universal-links>
+        <host name="memo.moke.tw" event="ul_mainPage" />
+    </universal-links>
+</widget>

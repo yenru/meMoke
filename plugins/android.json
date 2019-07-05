@@ -1,0 +1,49 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-universal-links-plugin": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "tw.moke.memo"
+        }
+    }
+}
